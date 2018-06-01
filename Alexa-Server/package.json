@@ -8,5 +8,9 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "alexa-app-server": "^3.0.1"
+  },
+  "devDependencies": {},
   "description": ""
 }
