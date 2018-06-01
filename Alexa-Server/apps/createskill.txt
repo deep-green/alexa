@@ -1,6 +1,0 @@
-mkdir skillname
-cd skillname
-npm init
-npm install alexa-app --save
-npm init
-touch index.js
