@@ -10,7 +10,8 @@ var server = new AlexaAppServer( {
 	verify:true,
 	debug: false,
 	privateKey: 'private-key.pem',
-	certificate: 'cert.cer'
+	
+	certificate: 'certificate.pem'
 
 } );
 

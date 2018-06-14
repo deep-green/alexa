@@ -16,4 +16,4 @@ extendedKeyUsage = serverAuth
 subjectAltName = @subject_alternate_names
 
 [subject_alternate_names]
-DNS.1 = ec2-54-93-171-91.eu-central-1.compute.amazonaws.com
+DNS.1 = ec2-54-93-171-91.eu-central-1.compute.amazonaws.com/alexa/deepgreen
