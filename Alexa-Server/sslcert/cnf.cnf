@@ -1,0 +1,19 @@
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = DE
+ST = NW
+L = Minden
+O = deepgreen corp.
+CN = deepgreen
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @subject_alternate_names
+
+[subject_alternate_names]
+DNS.1 = ec2-54-93-171-91.eu-central-1.compute.amazonaws.com
