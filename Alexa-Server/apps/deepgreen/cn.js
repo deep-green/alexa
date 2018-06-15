@@ -8,9 +8,12 @@ exports.newGame = function (response, sendResponse) {
     socket.once('receive', function(msg) {
       console.log("receive:");
         console.log(msg);
+        response.say("in recieve");;
         sendResponse(response);
     });
     socket.once('reject', function() {
         console.log("rejected");
     });
+
+    response.shouldEndSession(false);
 }
