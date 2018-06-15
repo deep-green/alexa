@@ -17,7 +17,9 @@ app.error = function( exception, request, response ) {
 	console.log(response);
 	response.say( 'Sorry an error occured ' + error.message);
 };
-
+	app.SessionEnded(){
+		console.log("session ended");
+	}
 app.intent('newGame',
   {
     "slots":{"enemy":"AMAZON.DE_FIRST_NAME"}
@@ -31,6 +33,8 @@ app.intent('newGame',
   },
   function(request,response) {
     var enemy = request.slot('enemy');
+		console.log(request.hasSession());
+		response.say(enemy);
 		cn.newGame(response, function(response){
 			console.log("finished");
 			response.say("Dein Gegner ist "+enemy);
