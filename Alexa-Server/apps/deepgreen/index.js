@@ -7,7 +7,7 @@ var cn = require("./cn.js");
 
 
 app.launch( function( request, response ) {
-	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
+	response.say("Sie sind jetzt in ihrem Schachspiel, sie koennen jetzt ein neues Spiel starten" ).reprompt("").shouldEndSession( false );
 } );
 
 
@@ -31,12 +31,11 @@ app.intent('newGame',
   },
   function(request,response) {
     var enemy = request.slot('enemy');
-		response.say(enemy);
-		response.say("2 responses");
 		cn.newGame(response, function(response){
 			console.log("finished");
 			response.say("Dein Gegner ist "+enemy);
 		});
+		response.shouldEndSession(false);
   }
 );
 
