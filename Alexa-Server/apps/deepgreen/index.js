@@ -2,7 +2,7 @@ module.change_code = 1;
 'use strict';
 
 var alexa = require( 'alexa-app' );
-var app = new alexa.app( 'deepgreen' );
+var app = new alexa.app('deepgreen' );
 var cn = require("./cn.js");
 
 
@@ -31,11 +31,13 @@ app.intent('newGame',
   },
   function(request,response) {
     var enemy = request.slot('enemy');
-		cn.newGame();
-
-    response.say("Dein Gegner ist "+enemy);
+		cn.newGame(sendResponse,enemy);
   }
 );
+sendResponse(enemy){
+	response.say("Dein Gegner ist "+enemy);
+}
+
 
 
 
