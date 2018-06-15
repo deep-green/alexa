@@ -7,20 +7,11 @@ var server = new AlexaAppServer( {
 	httpsEnabled: true,
 	port: 6500,
 	log: true,
-	httpsPort: 6501,
-	verify:false,
-	debug: true,
+	httpsPort: 443,
+	verify:true,
+	debug: false,
 	privateKey: 'private-key.pem',
 	certificate: 'certificate.pem',
-	preRequest: function(json, req, res) {
-    console.log("preRequest fired");
-    json.userDetails = { "name": "Bob Smith" };
-  },
-  // Add a dummy attribute to the response
-  postRequest: function(json, req, res) {
-    console.log("JKO");
-    json.dummy = "text";
-  }
 
 } );
 
