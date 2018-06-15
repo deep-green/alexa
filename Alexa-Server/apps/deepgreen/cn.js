@@ -6,6 +6,7 @@ exports.newGame = function (sendResponse) {
                 console.log("newGame emitted"));
 
     socket.once('receive', function(msg) {
+      console.log("receive:");
         console.log(msg);
         sendResponse();
     });

@@ -32,6 +32,7 @@ app.intent('newGame',
   function(request,response) {
     var enemy = request.slot('enemy');
 		cn.newGame(function(){
+			console.log("finished");
 			response.say("Dein Gegner ist "+enemy);
 		});
   }
