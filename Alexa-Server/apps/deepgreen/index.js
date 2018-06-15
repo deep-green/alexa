@@ -31,11 +31,13 @@ app.intent('newGame',
   },
   function(request,response) {
     var enemy = request.slot('enemy');
-		cn.newGame(sendResponse,enemy);
+		cn.newGame(function(){
+			response.say("Dein Gegner ist "+enemy);
+		});
   }
 );
 sendResponse(enemy){
-	response.say("Dein Gegner ist "+enemy);
+
 }
 
 
