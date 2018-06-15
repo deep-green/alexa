@@ -36,9 +36,7 @@ app.intent('newGame',
 		});
   }
 );
-sendResponse(enemy){
 
-}
 
 
 
