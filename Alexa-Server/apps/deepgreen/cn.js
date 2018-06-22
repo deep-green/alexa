@@ -1,19 +1,27 @@
 const socket = require('socket.io-client')('http://ec2-54-93-171-91.eu-central-1.compute.amazonaws.com:4999');
+exports.newGame = function () {
+  return new Promise(function(resolve, reject){
+    console.log("start newGame");
 
-exports.newGame = function (response, sendResponse) {
+    let fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    let tok = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
-    socket.emit('newGame', { FEN: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', ID_enemy: 'maxmustermann', color: false, token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" },
-                console.log("newGame emitted"));
+    socket.emit('newGame', { FEN: fen, ID_enemy: 'maxmustermann', color: false, token: tok },
+      console.log("newGame emitted"));
 
     socket.once('receive', function(msg) {
       console.log("receive:");
-        console.log(msg);
-        response.say("in recieve");;
-        sendResponse(response);
+      console.log(msg);
+      resolve(msg);
     });
     socket.once('reject', function() {
-        console.log("rejected");
+      console.log("rejected");
+      resolve("rejected");
     });
 
-    response.shouldEndSession(false);
+
+  });
+
+
+
 }

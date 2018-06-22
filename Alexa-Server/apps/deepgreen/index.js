@@ -30,17 +30,12 @@ app.intent('newGame',
   ]
   },
   function(request,response) {
-
     var enemy = request.slot('enemy');
-		cn.newGame(response, function(response){
-			console.log("finished");
-			response.say("Dein Gegner ist "+enemy);
-		});
+		return cn.newGame().then(function(msg){
+	  	console.log(msg);
 
-		var end = Date.now() + 5000
-		while (Date.now() < end) ;
-		
-		response.shouldEndSession(false);
+	});
+
   }
 );
 
