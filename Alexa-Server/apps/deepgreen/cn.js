@@ -25,3 +25,13 @@ exports.newGame = function (enemy,color) {
 
 
 }
+
+exports.makeMove = function (start,end) {
+  return new Promise(function(resolve, reject){
+    console.log("makeMove");
+
+  });
+
+
+
+}

@@ -44,12 +44,36 @@ app.intent('newGame',
 			if(request.slot('Farbe')=="weiß"){
 				farbe = false;
 			}
-		
+			if(kidiff=="eins"){
+				enemy="ki1";
+			}
+
 		console.log(enemy);
 		console.log(kidiff);
 		console.log(farbe);
 
-		return cn.newGame(enemy,farbe).then(function(msg){
+		return cn.newGame("peter",farbe).then(function(msg){
+	  	console.log(msg);
+
+	});
+
+  }
+);
+
+app.intent('makeMove',
+  {
+    "slots":{
+						"startLocation":"AMAZON.DE_FIRST_NAME",
+						"endLocation":"AMAZON.DE_FIRST_NAME"}
+	,"utterances":[
+    "setze {startLocation} auf {endLocation}",
+  ]
+  },
+  function(request,response) {
+		var start = request.slot('startLocation');
+		var end = request.slot('endLocation');
+
+		return cn.makeMove(start,end).then(function(msg){
 	  	console.log(msg);
 
 	});
