@@ -21,7 +21,10 @@ app.error = function( exception, request, response ) {
 app.intent('newGame',
   {
 		"dialog":{type: "delegate"},
-    "slots":{"enemy":"AMAZON.DE_FIRST_NAME"}
+    "slots":{
+						"enemy":"AMAZON.DE_FIRST_NAME",
+						"KIDifficulty":"AMAZON.DE_FIRST_NAME",
+						"Farbe":"AMAZON.Color"}
 	,"utterances":[
     "neues Spiel gegen {enemy}",
     "neues Spiel gegen {enemy} starten.",
@@ -32,7 +35,11 @@ app.intent('newGame',
   },
   function(request,response) {
     var enemy = request.slot('enemy');
+		var kidiff = request.slot('KIDifficulty');
+		var farbe = request.slot('Farbe');
 		console.log(enemy);
+		console.log(kidiff);
+		console.log(farbe);
 		if(enemy == "bot"){
 			dialog =  request.getDialog();
 			console.log(dialog.isStarted());
