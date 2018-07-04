@@ -20,7 +20,7 @@ app.error = function( exception, request, response ) {
 
 app.intent('newGame',
   {
-		"dialog":{type: "ElicitSlot"},
+		"dialog":{type: "delegate"},
     "slots":{
 						"enemy":"AMAZON.DE_FIRST_NAME",
 						"KIDifficulty":"AMAZON.DE_FIRST_NAME",
@@ -35,26 +35,16 @@ app.intent('newGame',
   },
   function(request,response) {
 		var enemy = request.slot('enemy');
-		console.log(enemy.confirmationStatus);
-		console.log(enemy.resolutions(0));
-		console.log(enemy.resolutions(0).status);
-
-
-
 		var kidiff = "";
 		var farbe = true;
 
 
-		if(enemy == "bot"){
-			//dialog =  request.getDialog();
+			dialog =  request.getDialog();
 			kidiff = request.slot('KIDifficulty');
 			if(request.slot('Farbe')=="weiß"){
 				farbe = false;
 			}
-		}else{
-			request.slot('KIDifficulty')="eins";
-			request.slot('Farbe')="weiß";
-		}
+		
 		console.log(enemy);
 		console.log(kidiff);
 		console.log(farbe);
