@@ -26,12 +26,22 @@ exports.newGame = function (enemy,color) {
 
 }
 
-exports.makeMove = function (start,end) {
+exports.makeMove = function (start,end,game,fen) {
   return new Promise(function(resolve, reject){
     console.log("makeMove");
+    //get valid moves?
+    // move to fen
 
+
+    socket.emit('makeMove', { FEN: fen, ID_game: game, token: tok },
+      console.log("makeMove emitted"));
   });
 
+  socket.once('receive', function(msg) {
+    console.log("receive:");
+    console.log(msg);
+    resolve(msg);
+  });
 
 
 }
