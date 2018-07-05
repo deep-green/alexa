@@ -70,6 +70,8 @@ exports.awaitMove = function () {
       console.log(msg);
       resolve(msg);
     });
+  }
+}
 
 
 
