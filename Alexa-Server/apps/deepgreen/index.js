@@ -165,6 +165,7 @@ app.intent('forfeit',
 		return cn.forfeit(gameid).then(function(msg){
 	  	response.say("Sie haben aufgegeben");
 	});
+}
 );
 
 
