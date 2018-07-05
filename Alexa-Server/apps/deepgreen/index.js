@@ -73,6 +73,7 @@ app.intent('newGame',
 			let session = request.getSession();
 			session.set("gameid", gameid);
 			session.set("aktFen", fen);
+			session.set("myColor",color);
 
 			response.say("Neues Schachspiel gestartet");
 			response.say('Sie spielen als die Farbe "'+color+'"');
@@ -112,6 +113,36 @@ app.intent('makeMove',
 			response.say(msg);
 			response.shouldEndSession(false);
 	});
+
+  }
+);
+
+app.intent('whoseTurn',
+  {
+    "slots":{}
+	,"utterances":[
+    "Wer ist gerade drann",
+		"Wer ist gerade am Zug",
+  ]
+  },
+  function(request,response) {
+		chess = require('chesslib');
+
+		let session = request.getSession();
+		let fen = session.get("aktFen");
+		position = chess.FEN.parse(fen);
+		let activeColor=position['activeColor']
+		if(activeColor=="white"){
+			activeColor="weiß";
+		}
+		if(activeColor=="black"){
+			activeColor="schwarz";
+		}
+	if(activeColor == session.get("myColor")){
+		response.say("Sie sind am Zug");
+	}else{
+		response.say("Ihr Gegner ist am Zug");
+	}
 
   }
 );
