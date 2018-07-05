@@ -54,6 +54,16 @@ app.intent('newGame',
 
 		return cn.newGame("peter",farbe).then(function(msg){
 	  	console.log(msg);
+
+			var json = JSON.parse(msg);
+			console.log(json['ID_game']);
+			let gameid = json['ID_game'];
+			let fen = json['FEN'];
+
+			let session = request.getSession();
+			session.set("gameid", gameid);
+			session.set("aktFen", fen);
+
 			response.say("Neues Schachspiel gestartet");
 			response.shouldEndSession(false);
 
@@ -75,7 +85,11 @@ app.intent('makeMove',
 		var start = request.slot('startLocation');
 		var end = request.slot('endLocation');
 
-		return cn.makeMove(start,end).then(function(msg){
+		let session = request.getSession();
+		let gameid = session.get("gameid");
+		let fen = session.get("aktFen");
+		console.log("aktfen: "+ fen);
+		return cn.makeMove(start,end,gameid,fen).then(function(msg){
 	  	console.log(msg);
 			response.say(msg);
 
