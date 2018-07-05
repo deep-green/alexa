@@ -38,8 +38,6 @@ app.intent('newGame',
 		var kidiff = "";
 		var farbe = true;
 
-
-			dialog =  request.getDialog();
 			kidiff = request.slot('KIDifficulty');
 			if(request.slot('Farbe')=="weiß"){
 				farbe = false;
@@ -47,12 +45,17 @@ app.intent('newGame',
 			if(kidiff=="eins"){
 				enemy="ki1";
 			}
-
+			if(kidiff=="zwei"){
+				enemy="ki2";
+			}
+if(enemy==""){
+	console.log("kein enemy angegeben");
+}
 		console.log(enemy);
 		console.log(kidiff);
 		console.log(farbe);
 
-		return cn.newGame("peter",farbe).then(function(msg){
+		return cn.newGame(enemy,farbe).then(function(msg){
 	  	console.log(msg);
 
 			let string = JSON.stringify(msg);
@@ -93,7 +96,7 @@ app.intent('makeMove',
 		return cn.makeMove(start,end,gameid,fen).then(function(msg){
 	  	console.log(msg);
 			response.say(msg);
-
+			response.shouldEndSession(false);
 	});
 
   }

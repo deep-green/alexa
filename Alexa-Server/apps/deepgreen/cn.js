@@ -30,6 +30,7 @@ exports.newGame = function (enemy,color) {
 exports.makeMove = function (start,end,game,fen) {
   return new Promise(function(resolve, reject){
     console.log("makeMove");
+    fen = "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 1";
     //get valid moves?
     // move to fen
 
@@ -44,5 +45,10 @@ exports.makeMove = function (start,end,game,fen) {
     resolve("Ihr Gegner ist jetzt am Zug,");
   });
 
+  socket.once('rejected', function(msg) {
+    console.log("rejected:");
+    console.log(msg);
+    resolve("Der Zug war nicht gültig, versuchen sie es erneut");
+  });
 
 }
