@@ -55,7 +55,8 @@ app.intent('newGame',
 		return cn.newGame("peter",farbe).then(function(msg){
 	  	console.log(msg);
 
-			var json = JSON.parse(msg);
+			let string = JSON.stringify(msg);
+			let json = JSON.parse(string);
 			console.log(json['ID_game']);
 			let gameid = json['ID_game'];
 			let fen = json['FEN'];
