@@ -37,7 +37,7 @@ exports.makeMove = function (start,end,game,fen) {
 
     socket.emit('makeMove', { FEN: fen, ID_game: game, token: tok },
       console.log("makeMove emitted"));
-  });
+
 
   socket.once('receive', function(msg) {
     console.log("receive:");
@@ -50,7 +50,7 @@ exports.makeMove = function (start,end,game,fen) {
     console.log(msg);
     resolve("Der Zug war nicht gültig, versuchen sie es erneut");
   });
-
+  });
 }
 exports.forfeit = function (game) {
   return new Promise(function(resolve, reject){
@@ -70,7 +70,7 @@ exports.awaitMove = function () {
       console.log(msg);
       resolve(msg);
     });
-  }
+  });
 }
 
 
