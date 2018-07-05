@@ -52,3 +52,14 @@ exports.makeMove = function (start,end,game,fen) {
   });
 
 }
+exports.forfeit = function (game) {
+  return new Promise(function(resolve, reject){
+    console.log("forfeit");
+
+    socket.emit('end', { reason: "won", ID_game: game, token: tok },
+      resolve(""));
+  });
+
+
+
+}

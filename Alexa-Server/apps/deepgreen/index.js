@@ -143,9 +143,30 @@ app.intent('whoseTurn',
 	}else{
 		response.say("Ihr Gegner ist am Zug");
 	}
+		response.shouldEndSession(false);
 
   }
 );
+
+app.intent('forfeit',
+  {
+    "slots":{}
+	,"utterances":[
+    "aufgeben",
+		"aufgabe",
+		"forfeit",
+		"ff",
+  ]
+  },
+  function(request,response) {
+
+		let session = request.getSession();
+		let gameid = session.get("gameid");
+		return cn.forfeit(gameid).then(function(msg){
+	  	response.say("Sie haben aufgegeben");
+	});
+);
+
 
 
 module.exports = app;
