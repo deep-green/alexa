@@ -56,11 +56,9 @@ app.intent('newGame',
 		console.log(farbe);
 
 		return cn.newGame(enemy,farbe).then(function(msg){
-	  	console.log(msg);
 
 			let string = JSON.stringify(msg);
 			let json = JSON.parse(string);
-			console.log(json['ID_game']);
 			let gameid = json['ID_game'];
 			let fen = json['FEN'];
 			let color = json['color'];
@@ -164,6 +162,31 @@ app.intent('forfeit',
 		let gameid = session.get("gameid");
 		return cn.forfeit(gameid).then(function(msg){
 	  	response.say("Sie haben aufgegeben");
+			response.shouldEndSession(true);
+	});
+}
+);
+
+
+app.intent('awaitMove',
+  {
+    "slots":{}
+	,"utterances":[
+    "warte",
+		"warte auf den Zug meines Gegners",
+  ]
+  },
+  function(request,response) {
+
+		let session = request.getSession();
+		let gameid = session.get("gameid");
+		return cn.awaitMove().then(function(msg){
+			let string = JSON.stringify(msg);
+			let json = JSON.parse(string);
+			let fen = json['FEN'];
+			session.set("aktFen", fen);
+			response.say("Ihr Gegner hat einen Zug gemacht, Sie sind drann.")
+			response.shouldEndSession(false);
 	});
 }
 );

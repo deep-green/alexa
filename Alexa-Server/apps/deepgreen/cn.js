@@ -59,6 +59,17 @@ exports.forfeit = function (game) {
     socket.emit('end', { reason: "won", ID_game: game, token: tok },
       resolve(""));
   });
+}
+
+exports.awaitMove = function () {
+  return new Promise(function(resolve, reject){
+    console.log("awaitMove");
+
+    socket.once('receive', function(msg) {
+      console.log("receive:");
+      console.log(msg);
+      resolve(msg);
+    });
 
 
 
