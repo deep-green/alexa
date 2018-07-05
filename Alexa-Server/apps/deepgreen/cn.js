@@ -72,7 +72,3 @@ exports.awaitMove = function () {
     });
   });
 }
-
-
-
-}
