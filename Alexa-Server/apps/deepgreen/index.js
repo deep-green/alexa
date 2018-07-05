@@ -37,7 +37,9 @@ app.intent('newGame',
 		var enemy = request.slot('enemy');
 		var kidiff = "";
 		var farbe = true;
-
+		if(enemy==""){
+			console.log("kein enemy angegeben");
+		}
 			kidiff = request.slot('KIDifficulty');
 			if(request.slot('Farbe')=="weiß"){
 				farbe = false;
@@ -48,9 +50,7 @@ app.intent('newGame',
 			if(kidiff=="zwei"){
 				enemy="ki2";
 			}
-if(enemy==""){
-	console.log("kein enemy angegeben");
-}
+
 		console.log(enemy);
 		console.log(kidiff);
 		console.log(farbe);
@@ -63,12 +63,26 @@ if(enemy==""){
 			console.log(json['ID_game']);
 			let gameid = json['ID_game'];
 			let fen = json['FEN'];
+			let color = json['color'];
+			if (color == false){
+				color = "weiß";
+			}else{
+				color = "schwarz";
+			}
 
 			let session = request.getSession();
 			session.set("gameid", gameid);
 			session.set("aktFen", fen);
 
 			response.say("Neues Schachspiel gestartet");
+			response.say('Sie spielen als die Farbe "'+color+'"');
+			if(color =="weiß"){
+				response.say("Sie sind am Zug. Um einen Zug zu machen formulieren sie ihn zum Beispiel so: setze a2 auf a3");
+			}else{
+				response.say("Ihr gegner ist am Zug. Um das Spiel fortzuführen müssen Sie den Zug des Gegners abwarten. Dies tun sie mit dem Befehl 'warte'");
+			}
+
+
 			response.shouldEndSession(false);
 
 	});
