@@ -30,9 +30,14 @@ exports.newGame = function (enemy,color) {
 exports.makeMove = function (start,end,game,fen) {
   return new Promise(function(resolve, reject){
     console.log("makeMove");
-    fen = "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 1";
-    //get valid moves?
-    // move to fen
+
+    let piece = getPiece(start,fen);
+    chess = require('chesslib');
+
+    position = chess.FEN.parse(fen);
+    position = position.move(piece+end);
+    fen = chess.FEN.stringify(position);
+    console.log("fen nach dem zug": fen);
 
 
     socket.emit('makeMove', { FEN: fen, ID_game: game, token: tok },
@@ -71,4 +76,52 @@ exports.awaitMove = function () {
       resolve(msg);
     });
   });
+}
+
+let getPiece = function(pos,fen){
+  let onlyfen = fen.split(" ")[0];
+
+  for(i = 1;i<9;i++){
+    let index = (onlyfen.indexOf(i));
+    if(index > 0){
+      let newStr="";
+      for(x=0;x<onlyfen[index];x++){
+        newStr+="1";
+      }
+      onlyfen = (onlyfen.replace(onlyfen[index],newStr));
+      i=1;
+    }
+
+  }
+  fen = onlyfen.split("/");
+  let zahl = 8-pos.split("")[1];
+  let buchstabe = pos.split("")[0];
+  switch(buchstabe){
+    case "a":
+      buchstabe=0;
+      break;
+    case "b":
+    buchstabe=1;
+      break;
+    case "c":
+    buchstabe=2;
+        break;
+    case "d":
+    buchstabe=3;
+        break;
+    case "e":
+    buchstabe=4;
+          break;
+    case "f":
+    buchstabe=5;
+          break;
+    case "g":
+    buchstabe=6;
+            break;
+    case "h":
+    buchstabe=7;
+            break;
+
+  }
+  return (fen[zahl][buchstabe]);
 }

@@ -161,7 +161,7 @@ app.intent('forfeit',
 		let session = request.getSession();
 		let gameid = session.get("gameid");
 		return cn.forfeit(gameid).then(function(msg){
-	  	response.say("Sie haben aufgegeben");
+	  	response.say("Sie haben aufgegeben.");
 			response.shouldEndSession(true);
 	});
 }
