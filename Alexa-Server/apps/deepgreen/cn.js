@@ -1,6 +1,55 @@
 const socket = require('socket.io-client')('http://ec2-54-93-171-91.eu-central-1.compute.amazonaws.com:4999');
 const tok = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
+exports.getPiece = function(pos,fen){
+  let onlyfen = fen.split(" ")[0];
+
+  for(i = 1;i<9;i++){
+    let index = (onlyfen.indexOf(i));
+    if(index > 0){
+      let newStr="";
+      for(x=0;x<onlyfen[index];x++){
+        newStr+="1";
+      }
+      onlyfen = (onlyfen.replace(onlyfen[index],newStr));
+      i=1;
+    }
+
+  }
+  fen = onlyfen.split("/");
+  let zahl = 8-pos.split("")[1];
+  let buchstabe = pos.split("")[0];
+  switch(buchstabe){
+    case "a":
+      buchstabe=0;
+      break;
+    case "b":
+    buchstabe=1;
+      break;
+    case "c":
+    buchstabe=2;
+        break;
+    case "d":
+    buchstabe=3;
+        break;
+    case "e":
+    buchstabe=4;
+          break;
+    case "f":
+    buchstabe=5;
+          break;
+    case "g":
+    buchstabe=6;
+            break;
+    case "h":
+    buchstabe=7;
+            break;
+
+  }
+  return (fen[zahl][buchstabe]);
+}
+
+
 exports.newGame = function (enemy,color) {
   return new Promise(function(resolve, reject){
     console.log("start newGame");
@@ -76,52 +125,4 @@ exports.awaitMove = function () {
       resolve(msg);
     });
   });
-}
-
-let getPiece = function(pos,fen){
-  let onlyfen = fen.split(" ")[0];
-
-  for(i = 1;i<9;i++){
-    let index = (onlyfen.indexOf(i));
-    if(index > 0){
-      let newStr="";
-      for(x=0;x<onlyfen[index];x++){
-        newStr+="1";
-      }
-      onlyfen = (onlyfen.replace(onlyfen[index],newStr));
-      i=1;
-    }
-
-  }
-  fen = onlyfen.split("/");
-  let zahl = 8-pos.split("")[1];
-  let buchstabe = pos.split("")[0];
-  switch(buchstabe){
-    case "a":
-      buchstabe=0;
-      break;
-    case "b":
-    buchstabe=1;
-      break;
-    case "c":
-    buchstabe=2;
-        break;
-    case "d":
-    buchstabe=3;
-        break;
-    case "e":
-    buchstabe=4;
-          break;
-    case "f":
-    buchstabe=5;
-          break;
-    case "g":
-    buchstabe=6;
-            break;
-    case "h":
-    buchstabe=7;
-            break;
-
-  }
-  return (fen[zahl][buchstabe]);
 }
