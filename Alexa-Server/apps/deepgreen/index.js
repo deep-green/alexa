@@ -54,6 +54,8 @@ app.intent('newGame',
 
 		return cn.newGame("peter",farbe).then(function(msg){
 	  	console.log(msg);
+			response.say("Neues Schachspiel gestartet");
+			response.shouldEndSession(false);
 
 	});
 
@@ -75,6 +77,7 @@ app.intent('makeMove',
 
 		return cn.makeMove(start,end).then(function(msg){
 	  	console.log(msg);
+			response.say(msg);
 
 	});
 

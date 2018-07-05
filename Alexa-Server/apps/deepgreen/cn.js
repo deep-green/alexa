@@ -40,7 +40,7 @@ exports.makeMove = function (start,end,game,fen) {
   socket.once('receive', function(msg) {
     console.log("receive:");
     console.log(msg);
-    resolve(msg);
+    resolve("Ihr Gegner ist jetzt am Zug,");
   });
 
 
