@@ -1,7 +1,7 @@
 const socket = require('socket.io-client')('http://ec2-54-93-171-91.eu-central-1.compute.amazonaws.com:4999');
 const tok = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
-exports.getPiece = function(pos,fen){
+const getPiece = function(pos,fen){
   let onlyfen = fen.split(" ")[0];
 
   for(i = 1;i<9;i++){
@@ -86,7 +86,7 @@ exports.makeMove = function (start,end,game,fen) {
     position = chess.FEN.parse(fen);
     position = position.move(piece+end);
     fen = chess.FEN.stringify(position);
-    console.log("fen nach dem zug": fen);
+    console.log("fen nach dem zug"+ fen);
 
 
     socket.emit('makeMove', { FEN: fen, ID_game: game, token: tok },
