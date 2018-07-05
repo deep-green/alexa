@@ -51,10 +51,6 @@ app.intent('newGame',
 				enemy="ki2";
 			}
 
-		console.log(enemy);
-		console.log(kidiff);
-		console.log(farbe);
-
 		return cn.newGame(enemy,farbe).then(function(msg){
 
 			let string = JSON.stringify(msg);
@@ -74,7 +70,7 @@ app.intent('newGame',
 			session.set("myColor",color);
 
 			response.say("Neues Schachspiel gestartet");
-			response.say('Sie spielen als die Farbe "'+color+'"');
+			response.say('Sie spielen als die Farbe "'+color+'".');
 			if(color =="weiß"){
 				response.say("Sie sind am Zug. Um einen Zug zu machen formulieren sie ihn zum Beispiel so: setze a2 auf a3");
 			}else{
