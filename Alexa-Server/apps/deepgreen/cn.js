@@ -96,13 +96,13 @@ exports.makeMove = function (start,end,game,fen) {
   socket.once('receive', function(msg) {
     console.log("receive:");
     console.log(msg);
-    resolve("Ihr Gegner ist jetzt am Zug,");
+    resolve(msg);
   });
 
   socket.once('rejected', function(msg) {
     console.log("rejected:");
     console.log(msg);
-    resolve("Der Zug war nicht gültig, versuchen sie es erneut");
+    resolve("invalid");
   });
   });
 }

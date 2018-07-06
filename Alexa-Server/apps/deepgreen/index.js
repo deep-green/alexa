@@ -104,7 +104,19 @@ app.intent('makeMove',
 		console.log("aktfen: "+ fen);
 		return cn.makeMove(start,end,gameid,fen).then(function(msg){
 	  	console.log(msg);
-			response.say(msg);
+			if(msg=="invalid"){
+				response.say("Der Zug war nicht gültig, versuchen sie es erneut");
+			}else{
+				response.say("Ihr Gegner ist jetzt am Zug.");
+
+				let string = JSON.stringify(msg);
+				let json = JSON.parse(string);
+				let fens = json['FEN'];
+				let sessions = request.getSession();
+				sessions.set("aktFen", fens);
+			}
+
+
 			response.shouldEndSession(false);
 	});
 
