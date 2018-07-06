@@ -48,7 +48,7 @@ const getPiece = function(pos,fen){
   }
   return (fen[zahl][buchstabe]);
 }
-const moveBerechnen = function(fenold,fennew){
+exports.moveBerechnen = function(fenold,fennew){
 
   let toFen = function(fen){
     for(i = 1;i<9;i++){

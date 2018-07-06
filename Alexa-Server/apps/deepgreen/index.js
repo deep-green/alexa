@@ -68,6 +68,7 @@ app.intent('newGame',
 			session.set("gameid", gameid);
 			session.set("aktFen", fen);
 			session.set("myColor",color);
+			session.set("gegnerZug","");
 
 			response.say("Neues Schachspiel gestartet");
 			response.say('Sie spielen als die Farbe "'+color+'".');
@@ -188,14 +189,40 @@ app.intent('awaitMove',
 
 		let session = request.getSession();
 		let gameid = session.get("gameid");
+		let aktFen = session.get("aktFen");
 		return cn.awaitMove().then(function(msg){
 			let string = JSON.stringify(msg);
 			let json = JSON.parse(string);
 			let fen = json['FEN'];
+			let zug = cn.moveBerechnen(aktFen,fen);
+			session.set("gegnerZug",zug);
 			session.set("aktFen", fen);
-			response.say("Ihr Gegner hat einen Zug gemacht, Sie sind drann.")
+			response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
 			response.shouldEndSession(false);
 	});
+}
+);
+
+
+app.intent('lastTurn',
+  {
+    "slots":{}
+	,"utterances":[
+    "letzter Zug",
+  ]
+  },
+  function(request,response) {
+
+		let session = request.getSession();
+		let zug = session.get("gegnerZug");
+		let msg = "";
+		if(zug==""){
+			msg = "Ihr gegner hat noch keinen Zug gemacht";
+		}else{
+			msg = zug;
+		}
+		response.say(msg);
+		response.shouldEndSession(false);
 }
 );
 
