@@ -48,7 +48,45 @@ const getPiece = function(pos,fen){
   }
   return (fen[zahl][buchstabe]);
 }
+const moveBerechnen = function(fenold,fennew){
 
+  let toFen = function(fen){
+    for(i = 1;i<9;i++){
+      let index = (fen.indexOf(i));
+      if(index > 0){
+        let newStr="";
+        for(x=0;x<fen[index];x++){
+          newStr+="1";
+        }
+        fen = (fen.replace(fen[index],newStr));
+        i=1;
+      }
+    }
+    return fen;
+  }
+
+  fenold=toFen(fenold.split(" ")[0]).split("/");
+  fennew=toFen(fennew.split(" ")[0]).split("/");
+
+  let index =[];
+  let values = [];
+
+  for(zahl=0;zahl<8;zahl++){
+    for(buchstabe=0;buchstabe<8;buchstabe++){
+      if(fenold[zahl][buchstabe] != fennew[zahl][buchstabe]){
+        index.push(String.fromCharCode(97+buchstabe)+(8-zahl));
+        values.push(fennew[zahl][buchstabe]);
+
+      }
+    }
+
+  }
+  console.log(index+" "+values);
+  if(values[0]==1){
+    return index[0]+"-"+index[1];
+  }
+    return index[1]+"-"+index[0];
+}
 
 exports.newGame = function (enemy,color) {
   return new Promise(function(resolve, reject){
