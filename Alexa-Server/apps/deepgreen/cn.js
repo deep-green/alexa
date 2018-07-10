@@ -46,7 +46,7 @@ const getPiece = function(pos,fen){
             break;
 
   }
-  return (fen[zahl][buchstabe]);
+  return (fen[zahl][buchstabe]).toUpperCase();
 }
 exports.moveBerechnen = function(fenold,fennew){
 
