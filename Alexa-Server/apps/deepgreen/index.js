@@ -1,3 +1,7 @@
+//dialog?
+//gast anmeldung?
+//spielende feststellen und ausgeben
+
 module.change_code = 1;
 'use strict';
 
@@ -37,9 +41,9 @@ app.intent('newGame',
 		var enemy = request.slot('enemy');
 		var kidiff = "";
 		var farbe = true;
-		if(enemy==""){
-			console.log("kein enemy angegeben");
-		}
+		if(enemy== undefined){
+
+
 			kidiff = request.slot('KIDifficulty');
 			if(request.slot('Farbe')=="weiß"){
 				farbe = false;
@@ -50,7 +54,8 @@ app.intent('newGame',
 			if(kidiff=="zwei"){
 				enemy="ki2";
 			}
-
+		}
+		console.log(enemy);
 		return cn.newGame(enemy,farbe).then(function(msg){
 
 			let string = JSON.stringify(msg);
