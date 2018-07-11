@@ -123,6 +123,7 @@ exports.makeMove = function (start,end,game,fen) {
 
     position = chess.FEN.parse(fen);
     position = position.move(piece+end);
+    console.log("Zug: "+piece+end);
     fen = chess.FEN.stringify(position);
     console.log("fen nach dem zug"+ fen);
 

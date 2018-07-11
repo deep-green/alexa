@@ -103,7 +103,7 @@ app.intent('makeMove',
   function(request,response) {
 		var start = request.slot('startLocation');
 		var end = request.slot('endLocation');
-
+		console.log("Zug: "+start+end);
 		let session = request.getSession();
 		let gameid = session.get("gameid");
 		let fen = session.get("aktFen");
