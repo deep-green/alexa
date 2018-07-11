@@ -123,7 +123,7 @@ exports.makeMove = function (start,end,game,fen) {
     console.log("Zug: "+piece+end);
     position = chess.FEN.parse(fen);
     if(piece=="1"){
-      resolve("invalid"); 
+      resolve("invalid");
     }
     if(piece =="P"){
       position = position.move(end);
@@ -136,7 +136,7 @@ exports.makeMove = function (start,end,game,fen) {
     console.log("fen nach dem zug"+ fen);
 
 
-    socket.emit('makeMove', { FEN: fen, ID_game: game, token: tok },
+    socket.emit('makeMove', { "FEN": "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 1", "ID_game": game, "token": tok },
       console.log("makeMove emitted"));
 
 
