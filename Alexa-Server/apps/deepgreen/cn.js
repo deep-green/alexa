@@ -120,10 +120,10 @@ exports.makeMove = function (start,end,game,fen) {
 
     let piece = getPiece(start,fen);
     chess = require('chesslib');
-
+    console.log("Zug: "+piece+end);
     position = chess.FEN.parse(fen);
     position = position.move(piece+end);
-    console.log("Zug: "+piece+end);
+
     fen = chess.FEN.stringify(position);
     console.log("fen nach dem zug"+ fen);
 

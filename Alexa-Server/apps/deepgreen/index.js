@@ -40,13 +40,13 @@ app.intent('newGame',
   function(request,response) {
 		var enemy = request.slot('enemy');
 		var kidiff = "";
-		var farbe = true;
+		var farbe = false;
 		if(enemy== undefined){
 
 
 			kidiff = request.slot('KIDifficulty');
-			if(request.slot('Farbe')=="weiß"){
-				farbe = false;
+			if(request.slot('Farbe')=="schwarz"){
+				farbe = true;
 			}
 			if(kidiff=="eins"){
 				enemy="ki_1";
