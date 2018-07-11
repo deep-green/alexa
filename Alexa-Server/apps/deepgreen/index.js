@@ -49,10 +49,10 @@ app.intent('newGame',
 				farbe = false;
 			}
 			if(kidiff=="eins"){
-				enemy="ki1";
+				enemy="ki_1";
 			}
 			if(kidiff=="zwei"){
-				enemy="ki2";
+				enemy="ki_2";
 			}
 		}
 		console.log(enemy);
