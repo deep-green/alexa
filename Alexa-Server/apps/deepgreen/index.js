@@ -122,6 +122,7 @@ app.intent('makeMove',
 				sessions.set("aktFen", fens);
 
 				let enemyMove =   function(request,response) {
+					return new Promise(function(resolve, reject){
 
 						let session = request.getSession();
 						let gameid = session.get("gameid");
@@ -136,8 +137,11 @@ app.intent('makeMove',
 							response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
 							response.shouldEndSession(false);
 					});
+				});
 				}
-				enemyMove(request,response);
+				enemyMove(request,response).then(function(msg){
+					console.log("Zug angekommen");
+				});
 
 			}
 
