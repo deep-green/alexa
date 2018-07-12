@@ -143,7 +143,7 @@ exports.makeMove = function (start,end,game,fen,response,request) {
   socket.once('receive', function(msg) {
     console.log("receive:");
     console.log(msg);
-    response.say("Es wird jetzt darauf gewartet, dass ihr Gegner einen Zug macht\n.");
+    response.say("Es wird jetzt darauf gewartet, dass ihr Gegner einen Zug macht.\n");
 
     let session = request.getSession();
     let gameid = session.get("gameid");
@@ -179,5 +179,17 @@ exports.forfeit = function (game) {
 
     socket.emit('end', { reason: "won", ID_game: game, token: tok },
       resolve(""));
+  });
+}
+
+exports.awaitMove = function () {
+  return new Promise(function(resolve, reject){
+    console.log("awaitMove");
+
+    socket.once('receive', function(msg) {
+      console.log("receive:");
+      console.log(msg);
+      resolve(msg);
+    });
   });
 }
