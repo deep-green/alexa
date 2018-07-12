@@ -148,11 +148,11 @@ exports.makeMove = function (start,end,game,fen,response,request) {
     let session = request.getSession();
     let gameid = session.get("gameid");
     let aktFen = session.get("aktFen");
-    awaitMove().then(function(msg){
+    exports.awaitMove().then(function(msg){
       let string = JSON.stringify(msg);
       let json = JSON.parse(string);
       let fen = json['FEN'];
-      let zug = moveBerechnen(aktFen,fen);
+      let zug = exports.moveBerechnen(aktFen,fen);
       session.set("gegnerZug",zug);
       session.set("aktFen", fen);
       response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.");
