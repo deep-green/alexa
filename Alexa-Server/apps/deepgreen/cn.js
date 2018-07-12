@@ -168,11 +168,11 @@ exports.makeMove = function (start,end,game,fen,response,request) {
     response.say("Der Zug war nicht gültig. Versuchen sie es erneut.");
     resolve("invalid");
   });
-})
-
-
 });
-}
+
+
+};
+
 exports.forfeit = function (game) {
   return new Promise(function(resolve, reject){
     console.log("forfeit");
