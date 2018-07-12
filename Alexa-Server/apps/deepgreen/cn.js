@@ -134,9 +134,10 @@ exports.makeMove = function (start,end,game,fen,response,request) {
 
     fen = chess.FEN.stringify(position);
     console.log("fen nach dem zug"+ fen);
+    
+    fen = fen.substr(0,fen.length-2) + " 0 "+ fen[fen.length-1];
 
-
-    socket.emit('makeMove', { "FEN": "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 1", "ID_game": game, "token": tok },
+    socket.emit('makeMove', { "FEN": fen, "ID_game": game, "token": tok },
       console.log("makeMove emitted"));
 
 
