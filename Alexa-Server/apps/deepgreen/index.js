@@ -120,6 +120,25 @@ app.intent('makeMove',
 				let fens = json['FEN'];
 				let sessions = request.getSession();
 				sessions.set("aktFen", fens);
+
+				let enemyMove =   function(request,response) {
+
+						let session = request.getSession();
+						let gameid = session.get("gameid");
+						let aktFen = session.get("aktFen");
+						return cn.awaitMove().then(function(msg){
+							let string = JSON.stringify(msg);
+							let json = JSON.parse(string);
+							let fen = json['FEN'];
+							let zug = cn.moveBerechnen(aktFen,fen);
+							session.set("gegnerZug",zug);
+							session.set("aktFen", fen);
+							response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
+							response.shouldEndSession(false);
+					});
+				}
+				enemyMove(request,response);
+
 			}
 
 
