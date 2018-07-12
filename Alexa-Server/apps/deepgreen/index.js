@@ -109,9 +109,13 @@ app.intent('makeMove',
 		let fen = session.get("aktFen");
 		console.log("aktfen: "+ fen);
 		return cn.makeMove(start,end,gameid,fen).then(function(msg){
+			return new Promise(function(resolve, reject){
+
 	  	console.log(msg);
 			if(msg=="invalid"){
 				response.say("Der Zug war nicht gültig, versuchen sie es erneut");
+				response.shouldEndSession(false);
+				resolve("invalid");
 			}else{
 				response.say("Ihr Gegner ist jetzt am Zug.");
 
@@ -140,14 +144,19 @@ app.intent('makeMove',
 				});
 				}
 				enemyMove(request,response).then(function(msg){
+
 					console.log("Zug angekommen");
 				});
-
+				response.shouldEndSession(false);
+				resolve("valid");
 			}
 
 
-			response.shouldEndSession(false);
-	});
+			});
+		}).then(function(msg){
+			console.log("in then: "+msg);
+			response.say("test");
+		});
 
   }
 );
