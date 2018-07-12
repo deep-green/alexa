@@ -11,7 +11,7 @@ var cn = require("./cn.js");
 
 
 app.launch( function( request, response ) {
-	response.say("Sie sind jetzt in ihrem Schachspiel, sie koennen jetzt ein neues Spiel starten" ).reprompt("").shouldEndSession( false );
+	response.say("Sie sind jetzt in ihrem Schachspiel." ).reprompt(" Sie können jetzt ein neues Spiel starten").shouldEndSession( false );
 } );
 
 
@@ -169,31 +169,6 @@ app.intent('forfeit',
 );
 
 
-app.intent('awaitMove',
-  {
-    "slots":{}
-	,"utterances":[
-    "warte",
-		"warte auf den Zug meines Gegners",
-  ]
-  },
-  function(request,response) {
-
-		let session = request.getSession();
-		let gameid = session.get("gameid");
-		let aktFen = session.get("aktFen");
-		return cn.awaitMove().then(function(msg){
-			let string = JSON.stringify(msg);
-			let json = JSON.parse(string);
-			let fen = json['FEN'];
-			let zug = cn.moveBerechnen(aktFen,fen);
-			session.set("gegnerZug",zug);
-			session.set("aktFen", fen);
-			response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
-			response.shouldEndSession(false);
-	});
-}
-);
 
 
 app.intent('lastTurn',

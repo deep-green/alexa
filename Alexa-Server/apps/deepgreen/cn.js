@@ -181,15 +181,3 @@ exports.forfeit = function (game) {
       resolve(""));
   });
 }
-
-exports.awaitMove = function () {
-  return new Promise(function(resolve, reject){
-    console.log("awaitMove");
-
-    socket.once('receive', function(msg) {
-      console.log("receive:");
-      console.log(msg);
-      resolve(msg);
-    });
-  });
-}
