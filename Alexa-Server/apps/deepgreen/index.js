@@ -117,45 +117,48 @@ app.intent('makeMove',
 				response.shouldEndSession(false);
 				resolve("invalid");
 			}else{
-				response.say("Ihr Gegner ist jetzt am Zug.");
+					response.say("Ihr Gegner ist jetzt am Zug.");
 
-				let string = JSON.stringify(msg);
-				let json = JSON.parse(string);
-				let fens = json['FEN'];
-				let sessions = request.getSession();
-				sessions.set("aktFen", fens);
+					let string = JSON.stringify(msg);
+					let json = JSON.parse(string);
+					let fens = json['FEN'];
+					let sessions = request.getSession();
+					sessions.set("aktFen", fens);
 
-				let enemyMove =   function(request,response) {
-					return new Promise(function(resolve, reject){
+					let enemyMove =   function(request,response) {
+						return new Promise(function(resolve, reject){
 
-						let session = request.getSession();
-						let gameid = session.get("gameid");
-						let aktFen = session.get("aktFen");
-						return cn.awaitMove().then(function(msg){
-							let string = JSON.stringify(msg);
-							let json = JSON.parse(string);
-							let fen = json['FEN'];
-							let zug = cn.moveBerechnen(aktFen,fen);
-							session.set("gegnerZug",zug);
-							session.set("aktFen", fen);
-							response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
-							response.shouldEndSession(false);
+							let session = request.getSession();
+							let gameid = session.get("gameid");
+							let aktFen = session.get("aktFen");
+							return cn.awaitMove().then(function(msg){
+								let string = JSON.stringify(msg);
+								let json = JSON.parse(string);
+								let fen = json['FEN'];
+								let zug = cn.moveBerechnen(aktFen,fen);
+								session.set("gegnerZug",zug);
+								session.set("aktFen", fen);
+						});
 					});
-				});
-				}
-				enemyMove(request,response).then(function(msg){
+					}
+					enemyMove(request,response).then(function(msg){
 
-					console.log("Zug angekommen");
-				});
-				response.shouldEndSession(false);
-				resolve("valid");
+					});
+					response.shouldEndSession(false);
+					resolve("valid");
 			}
 
 
 			});
 		}).then(function(msg){
-			console.log("in then: "+msg);
-			response.say("test");
+			if(msg=="invalid"){
+					console.log("Zug invalid");
+					response.shouldEndSession(false);
+			}else{
+				let zug = sessions.get("gegnerZug");
+				response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
+				response.shouldEndSession(false);
+			}
 		});
 
   }
