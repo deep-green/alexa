@@ -155,6 +155,7 @@ app.intent('makeMove',
 					console.log("Zug invalid");
 					response.shouldEndSession(false);
 			}else{
+				let sessions = request.getSession();
 				let zug = sessions.get("gegnerZug");
 				response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
 				response.shouldEndSession(false);
