@@ -48,7 +48,7 @@ const getPiece = function(pos,fen){
   }
   return (fen[zahl][buchstabe]).toUpperCase();
 }
-exports.moveBerechnen = function(fenold,fennew){
+const moveBerechnen = function(fenold,fennew){
 
   let toFen = function(fen){
     for(i = 1;i<9;i++){
@@ -143,7 +143,7 @@ exports.makeMove = function (start,end,game,fen,response,request) {
   socket.once('receive', function(msg) {
     console.log("receive:");
     console.log(msg);
-    response.say("Es wird jetzt darauf gewartet, dass ihr Gegner einen Zug macht.");
+    response.say("Es wird jetzt darauf gewartet, dass ihr Gegner einen Zug macht\n.");
 
     let session = request.getSession();
     let gameid = session.get("gameid");
@@ -152,10 +152,10 @@ exports.makeMove = function (start,end,game,fen,response,request) {
       let string = JSON.stringify(msg);
       let json = JSON.parse(string);
       let fen = json['FEN'];
-      let zug = exports.moveBerechnen(aktFen,fen);
+      let zug = moveBerechnen(aktFen,fen);
       session.set("gegnerZug",zug);
       session.set("aktFen", fen);
-      response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.");
+      response.say("Ihr Gegner hat den Zug "+zug+" gemacht , Sie sind drann.");
       resolve("Gegner hat gespielt.");
     });
 

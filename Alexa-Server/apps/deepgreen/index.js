@@ -11,7 +11,7 @@ var cn = require("./cn.js");
 
 
 app.launch( function( request, response ) {
-	response.say("Sie sind jetzt in ihrem Schachspiel." ).reprompt(" Sie können jetzt ein neues Spiel starten").shouldEndSession( false );
+	response.say("Sie sind jetzt in ihrem Schachspiel, sie koennen jetzt ein neues Spiel starten" ).reprompt("").shouldEndSession( false );
 } );
 
 
@@ -167,9 +167,6 @@ app.intent('forfeit',
 	});
 }
 );
-
-
-
 
 app.intent('lastTurn',
   {
