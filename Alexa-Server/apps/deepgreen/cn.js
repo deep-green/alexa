@@ -114,7 +114,7 @@ exports.newGame = function (enemy,color) {
 
 }
 
-exports.makeMove = function (start,end,game,fen) {
+exports.makeMove = function (start,end,game,fen,response,request) {
   return new Promise(function(resolve, reject){
     console.log("makeMove");
 
@@ -143,15 +143,35 @@ exports.makeMove = function (start,end,game,fen) {
   socket.once('receive', function(msg) {
     console.log("receive:");
     console.log(msg);
-    resolve(msg);
+    response.say("Es wird jetzt darauf gewartet, dass ihr Gegner einen Zug macht.");
+
+    let session = request.getSession();
+    let gameid = session.get("gameid");
+    let aktFen = session.get("aktFen");
+    awaitMove().then(function(msg){
+      let string = JSON.stringify(msg);
+      let json = JSON.parse(string);
+      let fen = json['FEN'];
+      let zug = moveBerechnen(aktFen,fen);
+      session.set("gegnerZug",zug);
+      session.set("aktFen", fen);
+      response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.");
+      resolve("Gegner hat gespielt.");
+    });
+
+
   });
 
   socket.once('rejected', function(msg) {
     console.log("rejected:");
-    console.log(msg);
+    console.log(msg)
+    response.say("Der Zug war nicht gültig. Versuchen sie es erneut.");
     resolve("invalid");
   });
-  });
+})
+
+
+});
 }
 exports.forfeit = function (game) {
   return new Promise(function(resolve, reject){

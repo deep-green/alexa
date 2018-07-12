@@ -108,61 +108,12 @@ app.intent('makeMove',
 		let gameid = session.get("gameid");
 		let fen = session.get("aktFen");
 		console.log("aktfen: "+ fen);
-		return cn.makeMove(start,end,gameid,fen).then(function(msg){
-			return new Promise(function(resolve, reject){
-
+		return cn.makeMove(start,end,gameid,fen,response,request).then(function(msg){
 	  	console.log(msg);
-			if(msg=="invalid"){
-				response.say("Der Zug war nicht gültig, versuchen sie es erneut");
-				response.shouldEndSession(false);
-				resolve("invalid");
-			}else{
-					response.say("Ihr Gegner ist jetzt am Zug.");
+			response.shouldEndSession(false);
 
-					let string = JSON.stringify(msg);
-					let json = JSON.parse(string);
-					let fens = json['FEN'];
-					let sessions = request.getSession();
-					sessions.set("aktFen", fens);
-
-					let enemyMove =   function(request,response) {
-						return new Promise(function(resolve, reject){
-
-							let session = request.getSession();
-							let gameid = session.get("gameid");
-							let aktFen = session.get("aktFen");
-							return cn.awaitMove().then(function(msg){
-								let string = JSON.stringify(msg);
-								let json = JSON.parse(string);
-								let fen = json['FEN'];
-								let zug = cn.moveBerechnen(aktFen,fen);
-								session.set("gegnerZug",zug);
-								session.set("aktFen", fen);
-						});
-					});
-					}
-					enemyMove(request,response).then(function(msg){
-
-					});
-					response.shouldEndSession(false);
-					resolve("valid");
-			}
-
-
-			});
-		}).then(function(msg){
-			if(msg=="invalid"){
-					console.log("Zug invalid");
-					response.shouldEndSession(false);
-			}else{
-				let sessions = request.getSession();
-				let zug = sessions.get("gegnerZug");
-				response.say("Ihr Gegner hat den Zug"+zug+" gemacht , Sie sind drann.")
-				response.shouldEndSession(false);
-			}
-		});
-
-  }
+});
+}
 );
 
 app.intent('whoseTurn',
