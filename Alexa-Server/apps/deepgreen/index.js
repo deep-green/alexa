@@ -158,7 +158,7 @@ app.intent('lastTurn',
 		if(zug==""){
 			msg = "Ihr gegner hat noch keinen Zug gemacht";
 		}else{
-			msg = zug;
+			msg = "Der letzte Zug ihres Gegners war: "+zug;
 		}
 		response.say(msg);
 		response.shouldEndSession(false);
