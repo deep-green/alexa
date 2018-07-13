@@ -56,34 +56,8 @@ app.intent('newGame',
 			}
 		}
 		console.log(enemy);
-		return cn.newGame(enemy,farbe).then(function(msg){
-
-			let string = JSON.stringify(msg);
-			let json = JSON.parse(string);
-			let gameid = json['ID_game'];
-			let fen = json['FEN'];
-			let color = json['color'];
-			if (color == false){
-				color = "weiß";
-			}else{
-				color = "schwarz";
-			}
-
-			let session = request.getSession();
-			session.set("gameid", gameid);
-			session.set("aktFen", fen);
-			session.set("myColor",color);
-			session.set("gegnerZug","");
-
-			response.say("Neues Schachspiel gestartet");
-			response.say('Sie spielen als die Farbe "'+color+'".');
-			if(color =="weiß"){
-				response.say("Sie sind am Zug. Um einen Zug zu machen formulieren sie ihn zum Beispiel so: setze a2 auf a3");
-			}else{
-				response.say("Ihr gegner ist am Zug. Um das Spiel fortzuführen müssen Sie den Zug des Gegners abwarten. Dies tun sie mit dem Befehl 'warte'");
-			}
-
-
+		return cn.newGame(enemy,farbe,response,request).then(function(msg){
+			console.log(msg);
 			response.shouldEndSession(false);
 
 	});
@@ -98,6 +72,7 @@ app.intent('makeMove',
 						"endLocation":"AMAZON.DE_FIRST_NAME"}
 	,"utterances":[
     "setze {startLocation} auf {endLocation}",
+		"{startLocation} auf {endLocation}",
   ]
   },
   function(request,response) {

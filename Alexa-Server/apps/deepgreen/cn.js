@@ -88,7 +88,7 @@ const moveBerechnen = function(fenold,fennew){
     return index[1]+"-"+index[0];
 }
 
-exports.newGame = function (enemy,color) {
+exports.newGame = function (enemy,color,response, request) {
   return new Promise(function(resolve, reject){
     console.log("start newGame");
 
@@ -100,6 +100,48 @@ exports.newGame = function (enemy,color) {
     socket.once('receive', function(msg) {
       console.log("receive:");
       console.log(msg);
+
+      let string = JSON.stringify(msg);
+			let json = JSON.parse(string);
+			let gameid = json['ID_game'];
+			let fen = json['FEN'];
+			let color = json['color'];
+			if (color == false){
+				color = "weiß";
+			}else{
+				color = "schwarz";
+			}
+
+      let session = request.getSession();
+			session.set("gameid", gameid);
+			session.set("aktFen", fen);
+			session.set("myColor",color);
+			session.set("gegnerZug","");
+
+			response.say("Neues Schachspiel gestartet");
+			response.say('Sie spielen als die Farbe "'+color+'".');
+			if(color =="weiß"){
+				response.say("Sie sind am Zug. Um einen Zug zu machen formulieren sie ihn zum Beispiel so: setze a2 auf a3");
+        response.shouldEndSession(false);
+        resolve("weiß");
+      }else{
+				response.say("Ihr gegner ist am Zug. Sie warten jetzt auf den Zug ihres Gegners.");
+        let gameid = session.get("gameid");
+        let aktFen = session.get("aktFen");
+        exports.awaitMove().then(function(msg){
+          let string = JSON.stringify(msg);
+          let json = JSON.parse(string);
+          let fen = json['FEN'];
+          let zug = moveBerechnen(aktFen,fen);
+          session.set("gegnerZug",zug);
+          session.set("aktFen", fen);
+          response.say("Ihr Gegner hat den Zug "+zug+" gemacht , Sie sind drann.");
+          response.shouldEndSession(false);
+          resolve("Gegner hat gespielt.");
+        });
+			}
+
+
       resolve(msg);
     });
     socket.once('reject', function() {
@@ -134,7 +176,7 @@ exports.makeMove = function (start,end,game,fen,response,request) {
 
     fen = chess.FEN.stringify(position);
     console.log("fen nach dem zug"+ fen);
-    
+
     fen = fen.substr(0,fen.length-2) + " 0 "+ fen[fen.length-1];
 
     socket.emit('makeMove', { "FEN": fen, "ID_game": game, "token": tok },
