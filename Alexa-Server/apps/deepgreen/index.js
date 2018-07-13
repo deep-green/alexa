@@ -57,7 +57,7 @@ app.intent('newGame',
 		}
 		console.log(enemy);
 		return cn.newGame(enemy,farbe,response,request).then(function(msg){
-			console.log(msg);
+			console.log("return: "+msg);
 			response.shouldEndSession(false);
 
 	});

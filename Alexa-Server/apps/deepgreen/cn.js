@@ -140,9 +140,6 @@ exports.newGame = function (enemy,color,response, request) {
           resolve("Gegner hat gespielt.");
         });
 			}
-
-
-      resolve(msg);
     });
     socket.once('reject', function() {
       console.log("rejected");
