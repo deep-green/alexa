@@ -1,0 +1,151 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "mein schachspiel",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "newGame",
+                    "slots": [
+                        {
+                            "name": "enemy",
+                            "type": "AMAZON.DE_FIRST_NAME"
+                        },
+                        {
+                            "name": "KIDifficulty",
+                            "type": "AMAZON.DE_FIRST_NAME",
+                            "samples": [
+                                "Schwierigkeit {KIDifficulty}"
+                            ]
+                        },
+                        {
+                            "name": "Farbe",
+                            "type": "AMAZON.Color",
+                            "samples": [
+                                "Ich möchte die Farbe {Farbe}",
+                                "{Farbe}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "neues Spiel gegen {enemy}",
+                        "neues Spiel gegen {enemy} starten.",
+                        "neues Spiel mit {enemy} starten",
+                        "neues Spiel.",
+                        "neues Spiel starten."
+                    ]
+                },
+                {
+                    "name": "makeMove",
+                    "slots": [
+                        {
+                            "name": "startLocation",
+                            "type": "AMAZON.DE_FIRST_NAME"
+                        },
+                        {
+                            "name": "endLocation",
+                            "type": "AMAZON.DE_FIRST_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "{startLocation} auf  {endLocation}",
+                        "setze {startLocation} auf {endLocation}"
+                    ]
+                },
+                {
+                    "name": "whoseTurn",
+                    "slots": [],
+                    "samples": [
+                        "Wer ist gerade drann",
+                        "Wer ist gerade am Zug"
+                    ]
+                },
+                {
+                    "name": "forfeit",
+                    "slots": [],
+                    "samples": [
+                        "aufgeben",
+                        "aufgabe",
+                        "forfeit",
+                        "ff"
+                    ]
+                },
+                {
+                    "name": "lastTurn",
+                    "slots": [],
+                    "samples": [
+                        "letzter Zug"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "newGame",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "enemy",
+                            "type": "AMAZON.DE_FIRST_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "KIDifficulty",
+                            "type": "AMAZON.DE_FIRST_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.637519355949.872292912349"
+                            }
+                        },
+                        {
+                            "name": "Farbe",
+                            "type": "AMAZON.Color",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.637519355949.1390760313425"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.637519355949.872292912349",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wählen sie die Schwierigkeitsstufe der KI aus, als auswahlmöglichkeiten gibt es die Schwierigkeiten eins und zwei"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.637519355949.1390760313425",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Mit welcher Farbe wollen sie spielen, weiß oder schwarz"
+                    }
+                ]
+            }
+        ]
+    }
+}
